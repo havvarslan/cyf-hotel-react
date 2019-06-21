@@ -52,6 +52,25 @@ tr {
   text-align: center;
 }
 
+.card-wrapper {
+  display: flex;
+  justify-content: space-around;
+  flex-flow: row wrap;
+}
+
 .card {
-  width: 18rem;
+  width: 20rem;
+  margin: 40px;
+}
+
+.selected-city {
+  background-color: yellow;
+}
+
+.btn-primary {
+  margin: 20px;
+}
+
+.restaurant {
+  margin: 20px;
 }
