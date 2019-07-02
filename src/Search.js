@@ -8,16 +8,14 @@ class Search extends Component {
       searchInput: ""
     };
   }
-  // setInputRef = input => {
-  //   this.input = input
-  // }
 
   handleSubmit = event => {
     event.preventDefault();
-    this.props.search(this.input.value);
+    this.props.search(this.state.searchInput);
   };
 
   handleSearchInput = event => {
+    console.log(event.target.value);
     this.setState({
       searchInput: event.target.value
     });
@@ -43,7 +41,7 @@ class Search extends Component {
                   className="form-control"
                   placeholder="Customer Id"
                   value={this.state.searchInput}
-                  onchange={this.handleSearchInput}
+                  onChange={this.handleSearchInput}
                   // ref ={this.setInputRef}
                 />
                 <Button />

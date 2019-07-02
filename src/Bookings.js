@@ -2,41 +2,43 @@ import React, { Component } from "react";
 import Search from "./Search.js";
 import SearchResults from "./SearchResults.js";
 import FakeBookings from "./data/fakeBookings.json";
-import { tsPropertySignature } from "@babel/types";
 
 class Bookings extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      results: null
+      fakeBookings: FakeBookings
     };
   }
 
   search = searchVal => {
-    console.info("TO DO!", searchVal);
-    const checkDetails = customer => {
-      return (
-        customer.firstName === searchVal ||
-        customer.surname === searchVal ||
-        customer.id === searchVal
-      );
-    };
-    const searchResult = FakeBookings.filter(checkDetails);
+    const searchResult = !searchVal
+      ? FakeBookings
+      : FakeBookings.filter(customer => {
+          return (
+            customer.firstName
+              .toLowerCase()
+              .includes(searchVal.toLowerCase()) ||
+            customer.surname.toLowerCase().includes(searchVal.toLowerCase()) ||
+            customer.id === Number(searchVal)
+          );
+        });
+
     this.setState({
-      results: searchResult
+      fakeBookings: searchResult
     });
   };
 
-  componentDidMount() {
-    fetch("https://cyf-react.glitch.me/delayed")
-      .then(res => res.json())
-      .then(data => {
-        this.setState({
-          isLoading: false,
-          results: data
-        });
-      });
-  }
+  // componentDidMount() {
+  //   fetch("https://cyf-react.glitch.me/error")
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       this.setState({
+  //         isLoading: false,
+  //         results: data
+  //       });
+  //     })
+  //   }
 
   render() {
     if (this.state.isLoading) {
@@ -48,7 +50,7 @@ class Bookings extends Component {
         <div className="App-content">
           <div className="container">
             <Search search={this.search} />
-            <SearchResults results={FakeBookings} />
+            <SearchResults results={this.state.fakeBookings} />
           </div>
         </div>
       );
